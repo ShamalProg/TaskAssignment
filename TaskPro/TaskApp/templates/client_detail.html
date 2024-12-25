@@ -1,75 +1,144 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ client.name }} - Details</title>
     <style>
-        /* General page styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        /* Global Reset */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        /* Heading styling */
-        h1, h2 {
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e7f0f9;
             color: #333;
-            text-align: center;
+            line-height: 1.6;
+            padding: 20px;
         }
 
-        /* Paragraph styling */
+        /* Page Header */
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #34495e;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        /* Container for content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Paragraph */
         p {
-            font-size: 16px;
+            font-size: 18px;
             color: #555;
             text-align: center;
+            margin-bottom: 20px;
+            font-family:sans-serif;
         }
 
-        /* List styling */
+        /* Styling for Projects List */
         ul {
             list-style-type: none;
             padding: 0;
-            text-align: center;
+            margin-bottom: 30px;
         }
 
         li {
             background-color: #fff;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Link styling */
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling for Links */
         a {
-            color: #007BFF;
+            color: #3498db;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
 
         a:hover {
+            color: #2980b9;
             text-decoration: underline;
         }
 
-        /* Container for the content */
-        .container {
-            width: 80%;
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Buttons (Back to Clients) */
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 10px;
+            background-color:rgb(166, 23, 147);
+            color: #fff;
+            text-align: center;
+            font-size: 1.2em;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color:rgb(166, 23, 147);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            li {
+                padding: 12px;
+            }
         }
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>{{ client.name }}</h1>
         <p>Email: {{ client.email }}</p>
         <p>Phone: {{ client.phone }}</p>
 
-        <h2>Projects</h2>
+        <h3>Projects</h3>
         <ul>
             {% for project in client.projects.all %}
                 <li>{{ project.name }}</li>
@@ -78,7 +147,10 @@
             {% endfor %}
         </ul>
 
-        <p><a href="{% url 'client_list' %}">Back to Clients</a></p>
+        <!-- Back to Clients Button -->
+        <a href="{% url 'client_list' %}" class="back-btn">Back to Clients</a>
     </div>
+
 </body>
 </html>
+

@@ -28,7 +28,7 @@ def some_view(request):
 
 # Define a simple root view for "/"
 def home(request):
-    return HttpResponse("<h1>Welcome to TaskPro</h1><p><a href='/clients/'>View Clients</a></p>")
+    return HttpResponse("<h2>Welcome to TaskPro</h2><p><a href='/clients/'>View Clients</a></p>")
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin panel URL

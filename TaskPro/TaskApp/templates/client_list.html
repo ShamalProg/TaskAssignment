@@ -1,74 +1,154 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clients List</title>
     <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            padding: 7px 0;
+            background-color:rgb(133, 26, 141);
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* Container for table and buttons */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Table Styles */
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
         th, td {
-            border: 1px solid black;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #f2f2f2;
-        }
-        .logout-btn {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: red;
+            background-color:rgb(133, 26, 141);
             color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Link and Button Styles */
+        a {
+            color:rgb(133, 26, 141);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color:rgb(133, 26, 141);
+        }
+
+        /* Add Client and Logout Button */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .action-buttons a, .logout-btn {
+            padding: 10px 20px;
+            background-color:rgb(133, 26, 141);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .action-buttons a:hover, .logout-btn:hover {
+            background-color:rgb(133, 26, 141);
+        }
+
+        .logout-btn {
+            background-color: red;
             border: none;
             cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Clients List</h1>
+    <h2>Clients List</h2>
 
-    <!-- Display clients in table format -->
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for client in clients %}
+    <div class="container">
+        <!-- Display clients in table format -->
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ client.name }}</td>
-                    <td>{{ client.email }}</td>
-                    <td>
-                        <a href="{% url 'edit_client' client.id %}">Edit</a> | 
-                        <a href="{% url 'delete_client' client.id %}">Delete</a> | 
-                        <a href="{% url 'add_project' client.id %}">Add Project</a>|
-                        <a href="{% url 'client_detail' client.id %}">See Project</a>
-
-                    </td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Operations</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="3">No clients found. <a href="{% url 'register_client' %}">Register a new client</a></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                    <tr>
+                        <td>{{ client.name }}</td>
+                        <td>{{ client.email }}</td>
+                        <td>
+                            <ul>
+                        <li>
+                            <a href="{% url 'edit_client' client.id %}">Edit</a> </li>
+                           <li> <a href="{% url 'delete_client' client.id %}">Delete</a></li>
+                           <li> <a href="{% url 'add_project' client.id %}">Add Project</a></li>
+                           <li> <a href="{% url 'client_detail' client.id %}">See Project</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No clients found. <a href="{% url 'register_client' %}">Register a new client</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <!-- Register New Client button -->
-    <p><a href="{% url 'register_client' %}">Register New Client</a></p>
-
-    <!-- View My Projects button -->
-    {% comment %} <p><a href="{% url 'user_projects' %}">View My Projects</a></p> {% endcomment %}
-
-    <!-- Logout button -->
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button class="logout-btn" type="submit">Logout</button>
-    </form>
+        <!-- Action Buttons for Adding New Client and Logout -->
+        <div class="action-buttons">
+            <a href="{% url 'register_client' %}">Register New Client</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="logout-btn" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
+
